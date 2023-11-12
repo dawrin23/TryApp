@@ -44,3 +44,38 @@ model disponibilidad{
   Servicio servicio @relation(fields: [IdServicio], references: [id])
 }
 
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  Role      Role?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Role {
+  id       Int     @id @default(autoincrement())
+  role     Boolean
+  author   User    @relation(fields: [authorId], references: [id])
+  authorId Int     @unique
+}
+
+model Clientes {
+  id        Int       @id @default(autoincrement())
+  name      String
+  lastName  String
+  Reservas  Reservas?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Reservas {
+  id               Int      @id @default(autoincrement())
+  fechaReserva     DateTime
+  cantidadPersonas Int
+  cliente          Clientes @relation(fields: [clienteId], references: [id])
+  clienteId        Int      @unique
+}
+
+
