@@ -11,4 +11,36 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
+model horario{
+  id Int @id @default(autoincrement())
+  Dia String
+  Hora DateTime
+  HorarioFin DateTime
+  Disponibilidad disponibilidad[]
+}
+
+model servicio{
+  id Int @id @default(autoincrement())
+  Nombre String
+  Descripcion String
+  Precio Float
+  Disponibilidad disponibilidad[]
+}
+
+model trabajador{
+  id Int @id @default(autoincrement())
+  Nombre String
+  Apellido String
+  Disponibilidad disponibilidad[]
+}
+
+model disponibilidad{
+  Id Int @id @default(autoincrement())
+  IdHorario Int
+  IdTrabajador Int
+  IdServicio Int
+  Horario horario @relation(fields: [IdHorario], references: [id])
+  Trabajador trabajador @relation(fields: [IdTrabajador], references: [id])
+  Servicio servicio @relation(fields: [IdServicio], references: [id])
+}
 
